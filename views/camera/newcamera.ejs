@@ -1,0 +1,83 @@
+<%- include('../partials/header.ejs'); %>
+
+<div class="container">
+
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home">Manual</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " data-toggle="tab" href="#ONVIF">ONVIF</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " data-toggle="tab" href="#Automatic">Automatic</a>
+    </li>
+
+  </ul>
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="home">
+
+
+      <form action="/cameras" method="POST">
+        <fieldset>
+          <legend>Add Camera</legend>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Camera Name</label>
+            <input type="text" class="form-control" name="name" aria-describedby="emailHelp"
+              placeholder="Enter Camera Name"
+              style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+            <small id="emailHelp" class="form-text text-muted">Camera name could be any. example: Camera1</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Camera address</label>
+            <input type="text" class="form-control" name="input" placeholder="rtsp://"
+              style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+            <small class="form-text text-muted">Example:
+              rtsp://[username:password@]ip_address[:rtsp_port]/server_URL[[?param1=val1[?param2=val2]…[?paramN=valN]]</small>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Youtube Stream name/key</label>
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">rtmp://a.rtmp.youtube.com/live2/</span>
+                </div>
+                <input type="text" class="form-control" name="output" placeholder="xxxx-xxxx-xxxx-xxxx">
+                <p></p>
+
+              </div>
+              <small class="form-text text-muted">Example: rtmp://a.rtmp.youtube.com/live2/xxxx-xxxx-xxxx-xxxx
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleSelect1">Select a proccessing node:</label>
+            <select class="form-control" name='agents' id="agent">
+              <% nodes.forEach(function(node){ %>
+              <option><%= node['interfaces'][0]['ip'] %></option>
+              <% }); %>
+            </select>
+          </div>
+
+
+
+          <button type="submit" class="btn btn-primary">Create</button>
+
+      </form>
+    </div>
+    <div class="tab-pane fade" id="ONVIF">
+      <p>comming soon</p>
+    </div>
+    <div class="tab-pane fade" id="Automatic">
+      <p>comming soon</p>
+    </div>
+    
+  </div>
+
+
+</div>
+
+<%- include('../partials/footer.ejs'); %>

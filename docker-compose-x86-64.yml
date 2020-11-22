@@ -1,0 +1,60 @@
+version: '2.1'
+
+services:
+  node-service:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    links:
+      - zabbix-server:zabbix
+    extra_hosts:
+      - "zabbix2:172.50.0.3"
+    # depends_on:
+    #   zabbix-server:
+    #     condition: service_healthy
+    networks:
+      dev_net:
+          ipv4_address: 172.50.0.2
+    command: node app.js
+    
+  zabbix-server:
+    image: zabbix/zabbix-appliance:latest
+    restart: unless-stopped
+    environment:
+      ZBX_TIMEOUT: 30
+    ports:
+      - "80:80"
+      - "10051:10051"
+    expose: 
+      - "80"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      dev_net:
+          ipv4_address: 172.50.0.3
+    # healthcheck:
+    #   test: "curl --fail http://172.50.0.3:80/ || exit 1"
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 10
+  
+networks:
+  dev_net:
+    # driver_opts:
+    #   com.docker.network.bridge.enable_icc: "true"
+    #   com.docker.network.bridge.enable_ip_masquerade: "false"
+    #   com.docker.network.bridge.host_binding_ipv4: "0.0.0.0"
+    #   com.docker.network.bridge.name: "br14"
+    #   com.docker.network.driver.mtu: "1500"
+    ipam:
+        driver: default
+        config:
+            - subnet: 172.50.0.0/24
+              gateway: 172.50.0.1
+            

@@ -1,0 +1,10 @@
+FROM node:10-alpine
+
+WORKDIR /home/node/app
+
+COPY package*.json ./
+RUN npm install --only=prod
+
+COPY . .
+RUN ls -l
+CMD [ "npm", “run”, "start:prod" ]

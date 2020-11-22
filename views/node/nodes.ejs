@@ -1,0 +1,62 @@
+<%- include('../partials/header.ejs'); %>
+
+<div class="container">
+    <%- include('../partials/messages.ejs') -%>
+        <p></p>
+        <p>
+            <a class="btn btn-primary btn-large" href="/nodes/newnode">Add new node</a>
+        </p>
+   
+        <div class="row justify-content-md-center">
+
+        <% if(nodes){ %>
+        <% nodes.forEach(function(node){ %>
+
+        
+        <div class="card border-primary mr-3 mb-3" style="min-width: 33rem; max-width: 33rem; max-height: 16rem;min-height: 16rem;">
+                <%if (node.available == 0) { %>
+                    <span class="badge badge-primery">Not Active</span>
+                <% } %>
+                <%if (node.available == 1) { %>
+                    <span class="badge badge-success">Active</span>
+                <% } %>
+                <% if(node.available == 2){%>
+                    <span class="badge badge-danger">Disconnected</span>
+                <% } %>
+            <div class="card-header">Node Name: <%= node.name %></div>
+            <% if(node.error){ %>
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h6><strong>Error!</strong><%= node.error %></h6>
+                  </div>
+                <% } %>
+                              
+
+            <div class="card-body">
+            
+                <h5 class="card-title">Node address: <%= node['interfaces'][0]['ip'] %></h5>
+    
+                <p class="card-text">
+
+
+                    <li>Node Host: <%= node.host %></li>
+
+                </p>
+            </div>
+            <div class="text-right"> <form  method="POST" action="/nodes/delnode" )>
+                <input type="hidden" name="hostid" value=<%= node.hostid %>>
+                <input type="hidden" name="hostip" value=<%= node.host %>>
+                <button type="submit" class="btn btn-outline-secondary">Delete</button>
+            </form></div>
+        </div>
+
+
+                <% });} %>
+
+
+
+        </div>
+
+
+
+</div>

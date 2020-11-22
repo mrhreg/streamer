@@ -1,0 +1,54 @@
+<%- include('partials/header.ejs'); %>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+
+
+<div>
+  <iframe class="resp-iframe embed-responsive-item" id="iframe"
+    src="<%- domain %>/zabbix.php?action=dashboard.view&ddreset=1" frameborder=0 scrolling="no"
+    onload="iframeLoaded('iframe')" style="width:100%;border:none;"></iframe>
+</div>
+
+
+
+
+<script>
+  function myFunction() {
+    document.getElementById('ifche').contentWindow.document.getElementById("action_buttons").remove()
+    var iframe = document.getElementById('ifche');
+
+    var html = document.getElementById('ifche').contentWindow.document.body;
+    html.innerHTML = document.getElementById('ifche').contentWindow.document.getElementById("flickerfreescreen_problem").innerHTML
+    document.getElementById('ifche').contentWindow.document.body.style.backgroundColor = "white";
+    iframe.style.height = (iframe.contentDocument.body.scrollHeight) + 'px';
+
+  }
+  function myFunction2() {
+
+    var iFrameID = document.getElementById('2ifche');
+
+
+    //iFrameID.contentWindow.document.body.innerHTML =  document.getElementById('ifche2').contentDocument.body.innerHTML
+    //document.getElementById('ifche2').contentWindow.document.getElementById("mmenu").remove()
+    iFrameID.contentWindow.document.body.style.backgroundColor = "red";
+    // here you can make the height, I delete it first, then I make it again
+    //iFrameID.style.height=(iFrameID.contentDocument.body.scrollHeight+45) +'px';
+
+  }
+
+
+  function iframeLoaded(iframeId) {
+    var iFrameID = document.getElementById(iframeId);
+
+    iFrameID.contentWindow.document.body.style.backgroundColor = "white";
+    // here you can make the height, I delete it first, then I make it again
+    iFrameID.style.height = (iFrameID.contentDocument.body.scrollHeight + 45) + 'px';
+
+  }   
+</script>
+
+
+<!-- <button onclick="iframeLoaded()">Try size it</button> -->
+<%- include('partials/footer.ejs'); %>

@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  node-service:
+    #image: webapp:tag
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile.dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: npm run start:prod

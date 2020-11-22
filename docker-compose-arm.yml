@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  nginx: 
+    build:
+      context: ./nginx/
+      dockerfile: ./Dockerfile
+    privileged: true
+    container_name: production_nginx
+    ports:
+      - 81:80
+    networks:
+      dev_net:
+          ipv4_address: 172.50.0.4
+
+  node-service:
+    #image: webapp:tag
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile.dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    
+    depends_on:
+      zabbix-server:
+        condition: service_healthy
+    networks:
+      dev_net:
+          ipv4_address: 172.50.0.2
+    command: node app.js
+    
+  zabbix-server:
+    image: zabbix/zabbix-appliance:latest
+    restart: unless-stopped
+    environment:
+      ZBX_TIMEOUT: 30
+    ports:
+      - "80:80"
+      - "10051:10051"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      dev_net:
+          ipv4_address: 172.50.0.3
+    healthcheck:
+      test: "curl --fail http://172.50.0.3:80/ || exit 1"
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+          
+  
+networks:
+  dev_net:
+      ipam:
+          driver: bridge
+          config:
+              - subnet: 172.53.0.0/24
