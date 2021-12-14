@@ -34,7 +34,7 @@
     "node-ansible": "^0.5.5",
     "node-http-proxy-json": "^0.1.9",
     "node-iframe-replacement": "^1.0.0",
-    "passport": "^0.4.1",
+    "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.0",
     "zabbix-client": "^1.2.7",
