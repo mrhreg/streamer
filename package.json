@@ -30,7 +30,7 @@
     "google-auth-library": "^6.0.0",
     "googleapis": "^51.0.0",
     "helmet": "^3.21.2",
-    "http-proxy-middleware": "^0.20.0",
+    "http-proxy-middleware": "^0.21.0",
     "node-ansible": "^0.5.5",
     "node-http-proxy-json": "^0.1.9",
     "node-iframe-replacement": "^1.0.0",
